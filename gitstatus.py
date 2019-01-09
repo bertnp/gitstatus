@@ -31,8 +31,10 @@ class col:
 pattern_uptodate = re.compile('Your branch is up to date with')
 pattern_nochanges = re.compile('nothing to commit, working tree clean')
 
-for root,dirs,files in os.walk(args.dir):
+for root,dirs,files in os.walk(args.dir, topdown=True):
     if '.git' in dirs:
+        dirs.clear()  # do not traverse further down once git repo is found
+
         up_to_date = False
         no_changes = False
 
